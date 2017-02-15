@@ -1,9 +1,5 @@
 ﻿using CountingKs.Data;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace CountingKs.Controllers
@@ -16,7 +12,7 @@ namespace CountingKs.Controllers
 
             var results = repo.GetAllFoods()
                               .OrderBy(f => f.Description)
-                              .Take(25)
+                              .Take(5)
                               .ToList();
             return results;
         }
