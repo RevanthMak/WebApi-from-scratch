@@ -6,6 +6,12 @@ namespace CountingKs.Controllers
 {
     public class FoodsController : ApiController
     {
+        ICountingKsRepository _repo;
+
+        public FoodsController(ICountingKsRepository repo)
+        {
+            _repo = repo;
+        }
         public object Get()
         {
             var repo = new CountingKsRepository(new CountingKsContext());
