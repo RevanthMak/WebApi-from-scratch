@@ -1,6 +1,5 @@
 ﻿using CountingKs.Data;
-using CountingKs.Data.Entities;
-using System.Collections;
+using CountingKs.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -9,13 +8,15 @@ namespace CountingKs.Controllers
 {
     public class FoodsController : ApiController
     {
+        ModelFactory _ModelFactory;
         ICountingKsRepository _repo;
 
         public FoodsController(ICountingKsRepository repo)
         {
             _repo = repo;
+            _ModelFactory = new ModelFactory();
         }
-        public IEnumerable<object> Get()
+        public IEnumerable<FoodModel> Get()
         {
             //var repo = new CountingKsRepository(new CountingKsContext());
 
@@ -23,17 +24,13 @@ namespace CountingKs.Controllers
                               .OrderBy(f => f.Description)
                               .Take(5)
                               .ToList()
-                              .Select(f => new
-                              {
-                                  Description = f.Description,
-                                  Measures = f.Measures.Select(m =>
-                                  new
-                                  {
-                                      Description = m.Description,
-                                      Calories = m.Calories
-                                  })
-                              });
+                              .Select(f => _ModelFactory.Create(f));
             return results;
+        }
+
+        public FoodModel Get(int id)
+        {
+            return _ModelFactory.Create(_repo.GetFood(id));
         }
 
     }
