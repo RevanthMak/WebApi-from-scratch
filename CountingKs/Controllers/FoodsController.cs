@@ -14,9 +14,9 @@ namespace CountingKs.Controllers
         }
         public object Get()
         {
-            var repo = new CountingKsRepository(new CountingKsContext());
+            //var repo = new CountingKsRepository(new CountingKsContext());
 
-            var results = repo.GetAllFoods()
+            var results = _repo.GetAllFoods()
                               .OrderBy(f => f.Description)
                               .Take(5)
                               .ToList();
