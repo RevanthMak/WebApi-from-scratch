@@ -1,4 +1,7 @@
 ﻿using CountingKs.Data;
+using CountingKs.Data.Entities;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
@@ -12,14 +15,24 @@ namespace CountingKs.Controllers
         {
             _repo = repo;
         }
-        public object Get()
+        public IEnumerable<object> Get()
         {
             //var repo = new CountingKsRepository(new CountingKsContext());
 
-            var results = _repo.GetAllFoods()
+            var results = _repo.GetAllFoodsWithMeasures()
                               .OrderBy(f => f.Description)
                               .Take(5)
-                              .ToList();
+                              .ToList()
+                              .Select(f => new
+                              {
+                                  Description = f.Description,
+                                  Measures = f.Measures.Select(m =>
+                                  new
+                                  {
+                                      Description = m.Description,
+                                      Calories = m.Calories
+                                  })
+                              });
             return results;
         }
 
