@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Serialization;
 using System.Linq;
 using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
 using System.Web.Http;
 
 namespace CountingKs
@@ -22,6 +21,12 @@ namespace CountingKs
                 name: "Measures",
                 routeTemplate: "api/nutrition/foods/foodid/measures/{id}",
                 defaults: new { Controller = "measures", id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "Dairies",
+                routeTemplate: "api/diaries/{diaryid}",
+                defaults: new { Controller = "diaries", diaryid = RouteParameter.Optional }
             );
 
 

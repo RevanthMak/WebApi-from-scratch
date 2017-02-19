@@ -32,5 +32,14 @@ namespace CountingKs.Models
                 Calories = measure.Calories
             };
         }
+
+        public DiaryModel Create(Diary m)
+        {
+            return new DiaryModel()
+            {
+                Url = _urlHelper.Link("Dairies", new { dairyid = m.CurrentDate.ToString("yyyy/mm/dd ")}),
+                CurrentDate = m.CurrentDate 
+            };
+        }
     }
 }
