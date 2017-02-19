@@ -37,7 +37,7 @@ namespace CountingKs.Controllers
             var result = TheRepository.GetDiary(username, diaryid);
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            return TheModelFactory.CreateResponse(HttpStatusCode.OK, TheModelFactory.Create(result));
+            return Request.CreateResponse(HttpStatusCode.OK, TheModelFactory.Create(result));
         }
     }
 }
