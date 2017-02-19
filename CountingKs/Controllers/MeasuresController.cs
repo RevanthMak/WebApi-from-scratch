@@ -10,22 +10,17 @@ using System.Web.Http;
 
 namespace CountingKs.Controllers
 {
-    public class MeasuresController : ApiController
+    public class MeasuresController : BaseApiController
     {
-        private ModelFactory _modelFactory;
-        private ICountingKsRepository _repo;
-
-        public MeasuresController(ICountingKsRepository repo)
+        public MeasuresController(ICountingKsRepository repo) : base(repo)
         {
-            _repo = repo;
-            _modelFactory = new ModelFactory();
         }
 
         public IEnumerable<MeasureModel> Get(int foodid)
         {
-            var result = _repo.GetMeasuresForFood(foodid)
+            var result = TheRepository.GetMeasuresForFood(foodid)
                               .ToList()
-                              .Select(m => _modelFactory.Create(m));
+                              .Select(m => TheModelFactory.Create(m));
 
             return result;
 
@@ -33,11 +28,11 @@ namespace CountingKs.Controllers
 
         public MeasureModel Get(int foodid, int id)
         {
-            var results = _repo.GetMeasure(id); 
+            var results = TheRepository.GetMeasure(id); 
 
             if(results.Food.Id == foodid)
             {
-                return _modelFactory.Create(results);
+                return TheModelFactory.Create(results);
             }
             return null;
         }

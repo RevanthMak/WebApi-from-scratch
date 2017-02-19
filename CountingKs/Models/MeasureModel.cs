@@ -2,6 +2,7 @@
 {
     public class MeasureModel
     {
+        public string url { get; set; }
         public string Description { get; set; }
         public double Calories { get; set; }
     }

@@ -6,31 +6,27 @@ using System.Web.Http;
 
 namespace CountingKs.Controllers
 {
-    public class FoodsController : ApiController
+    public class FoodsController : BaseApiController
     {
-        ModelFactory _ModelFactory;
-        ICountingKsRepository _repo;
-
-        public FoodsController(ICountingKsRepository repo)
+  
+        public FoodsController(ICountingKsRepository repo) : base(repo)
         {
-            _repo = repo;
-            _ModelFactory = new ModelFactory();
         }
         public IEnumerable<FoodModel> Get()
         {
             //var repo = new CountingKsRepository(new CountingKsContext());
 
-            var results = _repo.GetAllFoodsWithMeasures()
+            var results = TheRepository.GetAllFoodsWithMeasures()
                               .OrderBy(f => f.Description)
                               .Take(5)
                               .ToList()
-                              .Select(f => _ModelFactory.Create(f));
+                              .Select(f => TheModelFactory.Create(f));
             return results;
         }
 
         public FoodModel Get(int foodid)
         {
-            return _ModelFactory.Create(_repo.GetFood(foodid));
+            return TheModelFactory.Create(TheRepository.GetFood(foodid));
         }
 
     }
